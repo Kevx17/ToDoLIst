@@ -21,11 +21,15 @@ class Dom_manipulator {
         let bin = document.createElement('i')
         let add = document.createElement('i')
         arrow.classList.add('fa-solid', 'fa-arrow-down');
+        arrow.onclick = () => {
+            this.showToDos(obj.name);
+        }
         bin.classList.add('fa-solid', 'fa-trash-can');
         bin.onclick = () => {
             let delte_this = bin.closest('.project');
             let div_id = delte_this.id;
             delte_this.remove();
+            projects = projects.filter(item => item.name !== div_id)
         };
         add.classList.add('fa-solid', 'fa-plus');
 
@@ -55,20 +59,23 @@ class Dom_manipulator {
         desc.innerHTML = toDoObj.description;
         let dueDate = document.createElement('p');
         dueDate.innerHTML = `Due: ${toDoObj.dueDate.toLocaleDateString()}`;
+        dueDate.classList.add('date');
         
-        let arrow = document.createElement('i');
         let bin = document.createElement('i');
-        let add = document.createElement('i');
-        arrow.classList.add('fa-solid', 'fa-arrow-down');
+        bin.id = toDoObj.name + "_bin";
+        bin.onclick = () => {
+            this.delete_toDo(toDoDiv.id);
+        };
+        let check = document.createElement('input');
+        check.type = 'checkbox';
         bin.classList.add('fa-solid', 'fa-trash-can');
-        add.classList.add('fa-solid', 'fa-plus');
+        check.classList.add('check');
         
         toDoDiv.appendChild(title);
         toDoDiv.appendChild(desc);
         toDoDiv.appendChild(dueDate);
-        toDoDiv.appendChild(add);
-        toDoDiv.appendChild(arrow);
         toDoDiv.appendChild(bin);
+        toDoDiv.appendChild(check);
         projectDiv.appendChild(toDoDiv);
     }
 
@@ -114,6 +121,29 @@ class Dom_manipulator {
 
     closeModal() {
         document.getElementById('pop_up').style.display = "none";
+    }
+
+    showToDos(id) {
+        // buzi vagy
+        if (document.getElementById(id + '_toDo').style.display == 'block') {
+            document.getElementById(id + '_toDo').style.display = 'none';
+        }
+        else{
+         document.getElementById(id + '_toDo').style.display = 'block';
+        }
+
+    }
+
+    delete_toDo(id) {
+        let bin = document.getElementById(id + "_bin");
+        let ToDo = bin.parentElement;
+        let project = ToDo.closest('.project');
+        projects.forEach(element => {
+            if (element.name == project.id) {
+                element.toDos.filter(item => item.name !== id)
+            }
+        });
+        ToDo.remove();
     }
 
 }

@@ -20,8 +20,10 @@ const dm = new Dom_manipulator();
 dm.add_project(projects[0]);
 
 let ToDo1 = new ToDo("ToDo1", "You need to do this befor the due date", new Date(2024, 9, 8) );
+let ToDo2 = new ToDo("ToDo2", "You need to do this befor the due date", new Date(2024, 9, 8) );
 
 dm.add_ToDo(projects[0], ToDo1);
+dm.add_ToDo(projects[0], ToDo2);
 
 
 const add_p = document.getElementById("add_p");
