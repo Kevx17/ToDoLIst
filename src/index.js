@@ -11,6 +11,18 @@ function createProject() {
     dm.add_project(projects[i]);
 }
 
+function createToDo() {
+    let info = dm.get_toDo_info();
+    let project = info['project'];
+    let ToDo1 = new ToDo(info['title'], info['desc'], info['date']);
+    project.toDos.push(ToDo1);
+    let i = project.toDos.length;
+    dm.add_ToDo(project, ToDo1);
+}
+
+
+
+
 let projects = []
 
 projects.push(new Project('Project1', 'You can add your todos to this project'));
@@ -18,13 +30,6 @@ projects.push(new Project('Project1', 'You can add your todos to this project'))
 const dm = new Dom_manipulator();
 
 dm.add_project(projects[0]);
-
-let ToDo1 = new ToDo("ToDo1", "You need to do this befor the due date", new Date(2024, 9, 8) );
-let ToDo2 = new ToDo("ToDo2", "You need to do this befor the due date", new Date(2024, 9, 8) );
-
-dm.add_ToDo(projects[0], ToDo1);
-dm.add_ToDo(projects[0], ToDo2);
-
 
 const add_p = document.getElementById("add_p");
 const close = document.getElementById("close");
@@ -35,7 +40,7 @@ close.onclick = dm.closeModal;
 
 
 
-export {createProject, projects}
+export {createProject, createToDo, projects}
 
 
 
